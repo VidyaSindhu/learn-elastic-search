@@ -69,7 +69,7 @@ func IngestDocument(elasticsearchClient *elasticsearch.Client, c *gin.Context) {
 func Search(elasticsearchClient *elasticsearch.Client, c *gin.Context) {
 	query := c.Request.URL.Query()["query"][0]
 
-	queryTemplate,_ := models.Search(query)
+	queryTemplate,_ := buildSearchQuery(query)
 	
 	res, err := elasticsearchClient.Search(
 		elasticsearchClient.Search.WithIndex(presentIndices[0]),
@@ -133,4 +133,20 @@ func getDocumentBytes(indexName string, c *gin.Context) ([]byte) {
 	}
 
 	return nil
+}
+
+func buildSearchQuery(queryName string) (string, error) {
+	query := map[string]interface{}{
+		"query": map[string]interface{}{
+			"match": map[string]interface{}{
+				"restaurant_name":  queryName,
+			},
+		},
+	}
+
+	jsonQuery, err := json.Marshal(query)
+	if err != nil {
+		return "", err
+	}
+	return string(jsonQuery), nil
 }

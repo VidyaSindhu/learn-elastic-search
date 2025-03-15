@@ -18,19 +18,3 @@ type IndexConfig struct {
 	Settings map[string]interface{} `json:"settings"`
 	Mappings map[string]interface{} `json:"mappings"`
 }
-
-func Search(queryName string) (string, error) {
-	query := map[string]interface{}{
-		"query": map[string]interface{}{
-			"match": map[string]interface{}{
-				"restaurant_name":  queryName,
-			},
-		},
-	}
-
-	jsonQuery, err := json.Marshal(query)
-	if err != nil {
-		return "", err
-	}
-	return string(jsonQuery), nil
-}
