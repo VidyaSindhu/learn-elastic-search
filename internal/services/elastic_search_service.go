@@ -20,9 +20,48 @@ func SetPresentIndices (alreadyPresentIndices []string) {
 	presentIndices = alreadyPresentIndices
 }
 
+
+/*
+There are various types of field you can assign to a document's field such as
+	-> edge_ngram:
+		{
+			"settings": {
+				"analysis": {
+				"tokenizer": {
+					"edge_ngram_tokenizer": {
+					"type": "edge_ngram",
+					"min_gram": 2,
+					"max_gram": 10,
+					"token_chars": ["letter"]
+					}
+				},
+				"analyzer": {
+					"edge_ngram_analyzer": {
+					"type": "custom",
+					"tokenizer": "edge_ngram_tokenizer"
+					}
+				}
+				}
+			}
+		}
+	-> search_as_you_type: this is used for prefix as well full text search
+		{
+			"mappings": {
+				"properties": {
+				"restaurant_name": {
+					"type": "search_as_you_type"
+				}
+				}
+			}
+		} 
+	-> keyword: for Filtering, sorting, aggregations and exact match
+	-> text: for tokenization and searching words
+*/
 func CreateIndex(elasticsearchClient *elasticsearch.Client, c *gin.Context) {
 	indexName := c.Request.Header["Index-Name"][0]
 	var indexConfig models.IndexConfig
+
+
 
 	if err := c.BindJSON(&indexConfig); err != nil {
 		panic(err)
