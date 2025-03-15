@@ -1,10 +1,10 @@
 package models
 
 type FoodItem struct {
-	foodId int `json:"foodId"`
-	foodName string `json:"food_name"`
-	foodDescription string `json:"food_description`
-	price float32 `json:"price"`
-	restaurantId int64 `json:"restaurant_id"`
-	foodType string `json:"food_type"`
+	FoodId int `json:"foodId"`
+	FoodName string `json:"food_name"`
+	FoodDescription string `json:"food_description"`
+	Frice float32 `json:"price"`
+	RestaurantId int64 `json:"restaurant_id"`
+	FoodType string `json:"food_type"`
 }
