@@ -1,9 +1,5 @@
 package models
 
-import (
-	"encoding/json"
-)
-
 type FoodElasticsearchDocument struct {
 	FoodId int `json:"foodId"`
 	FoodName string `json:"food_name"`
